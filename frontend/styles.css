@@ -796,6 +796,155 @@ a { text-decoration: none; color: inherit; }
   justify-content: center;
 }
 
+/* ── Input Mode Tabs ─────────────────────────────────────────────────────── */
+.input-mode-tabs {
+  display: flex;
+  gap: 4px;
+  padding: var(--space-md) var(--space-lg) 0;
+  border-bottom: 1px solid var(--clr-bg-card-border);
+}
+.mode-tab {
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  background: transparent;
+  color: var(--clr-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.mode-tab:hover { color: var(--clr-text); }
+.mode-tab--active {
+  color: var(--clr-primary);
+  border-bottom-color: var(--clr-primary);
+}
+.mode-panel { padding: var(--space-lg); flex: 1; display: flex; flex-direction: column; }
+.mode-panel[hidden] { display: none; }
+
+/* ── Live Input Panel ────────────────────────────────────────────────────── */
+.live-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  flex: 1;
+}
+.live-input__hint {
+  font-size: 0.85rem;
+  color: var(--clr-text-muted);
+  background: rgba(59,130,246,0.08);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  line-height: 1.5;
+}
+
+/* Mic Button */
+.mic-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(239,68,68,0.4);
+  background: rgba(239,68,68,0.08);
+  color: var(--clr-text);
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 56px;
+  transition: all var(--transition-mid);
+}
+.mic-btn:hover { background: rgba(239,68,68,0.15); border-color: var(--clr-emergency); }
+.mic-btn--recording {
+  background: rgba(239,68,68,0.2);
+  border-color: var(--clr-emergency);
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.15);
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+@keyframes mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(239,68,68,0.15); }
+  50% { box-shadow: 0 0 0 10px rgba(239,68,68,0.05); }
+}
+.mic-btn__icon { font-size: 1.4rem; }
+
+/* Live Status */
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--clr-emergency);
+  font-weight: 600;
+}
+.live-status__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--clr-emergency);
+  animation: blink 0.8s ease-in-out infinite;
+}
+
+/* Live Textarea */
+.live-textarea {
+  width: 100%;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-bg-card-border);
+  border-radius: var(--radius-md);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: var(--space-md);
+  resize: vertical;
+  transition: border-color var(--transition-fast);
+  min-height: 110px;
+}
+.live-textarea:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+.live-textarea::placeholder { color: var(--clr-text-subtle); }
+
+/* Live Vitals */
+.live-vitals { }
+.live-vitals__label {
+  font-size: 0.75rem;
+  color: var(--clr-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+}
+.live-vitals-row {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+.live-vitals-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--clr-text-muted);
+}
+.vitals-input {
+  width: 64px;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-bg-card-border);
+  border-radius: var(--radius-sm);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  text-align: center;
+}
+.vitals-input:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+}
+
 /* ── Responsive Overrides ────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .nav__links { display: none; }

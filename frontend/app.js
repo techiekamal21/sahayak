@@ -302,4 +302,186 @@ document.querySelectorAll(".problem-card, .pipeline__step, .gcp-card").forEach((
   observer.observe(el);
 });
 
+// ── Live Input Mode & Web Speech API ────────────────────────────────────────
+
+// Tab Switching
+const tabDemo = document.getElementById("tab-demo");
+const tabLive = document.getElementById("tab-live");
+const panelDemo = document.getElementById("panel-demo");
+const panelLive = document.getElementById("panel-live");
+
+tabDemo.addEventListener("click", () => {
+  tabDemo.classList.add("mode-tab--active");
+  tabLive.classList.remove("mode-tab--active");
+  panelDemo.hidden = false;
+  panelLive.hidden = true;
+});
+
+tabLive.addEventListener("click", () => {
+  tabLive.classList.add("mode-tab--active");
+  tabDemo.classList.remove("mode-tab--active");
+  panelLive.hidden = false;
+  panelDemo.hidden = true;
+});
+
+// Speech Recognition setup
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isRecording = false;
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  // Use generic Hindi/English matching
+  recognition.lang = 'hi-IN';
+
+  const micBtn = document.getElementById("mic-btn");
+  const micLabel = document.getElementById("mic-label");
+  const liveStatus = document.getElementById("live-status");
+  const liveTextArea = document.getElementById("live-transcript-input");
+
+  micBtn.addEventListener("click", () => {
+    if (!isRecording) {
+      // Start recording
+      try {
+        recognition.start();
+        isRecording = true;
+        micBtn.classList.add("mic-btn--recording");
+        micLabel.textContent = "Stop Recording";
+        liveStatus.hidden = false;
+        // Optionally clear text area on fresh start
+        if(liveTextArea.value === '') liveTextArea.placeholder = "Listening...";
+      } catch(e) { console.error("Mic start error:", e); }
+    } else {
+      // Stop recording
+      recognition.stop();
+      isRecording = false;
+      micBtn.classList.remove("mic-btn--recording");
+      micLabel.textContent = "Tap to Record";
+      liveStatus.hidden = true;
+    }
+  });
+
+  recognition.onresult = (event) => {
+    let finalTranscript = '';
+    let interimTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      } else {
+        interimTranscript += event.results[i][0].transcript;
+      }
+    }
+    
+    // Append to textarea if final, or just show interim
+    if(finalTranscript) {
+       liveTextArea.value += (liveTextArea.value ? ' ' : '') + finalTranscript;
+    }
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error", event.error);
+    isRecording = false;
+    micBtn.classList.remove("mic-btn--recording");
+    micLabel.textContent = "Tap to Record";
+    liveStatus.hidden = true;
+  };
+} else {
+  // Graceful degradation
+  const micBtn = document.getElementById("mic-btn");
+  if(micBtn) micBtn.style.display = 'none';
+  document.getElementById("live-transcript-input").placeholder = "Speech recognition unsupported in this browser. Please type here...";
+}
+
+// ── Run Live Data ───────────────────────────────────────────────────────────
+document.getElementById("run-live-btn").addEventListener("click", async () => {
+    const transcript = document.getElementById("live-transcript-input").value.trim();
+    if (!transcript) {
+        alert("Please speak into the mic or type an emergency description first.");
+        return;
+    }
+
+    const btn = document.getElementById("run-live-btn");
+    btn.disabled = true;
+    btn.querySelector("span:not(.run-btn__icon)").textContent = "Analysing via Gemini 1.5...";
+
+    // Hide placeholder, show loading
+    document.getElementById("output-placeholder").hidden = true;
+    document.getElementById("output-loading").hidden = false;
+    document.getElementById("output-result").hidden = true;
+
+    // Start step-by-step loading animation
+    const steps = ["ls-1", "ls-2", "ls-3", "ls-4"];
+    const loadingAnim = async () => {
+      for (let i = 0; i < steps.length; i++) {
+        await delay(400);
+        document.getElementById(steps[i]).classList.add("active");
+      }
+    };
+    loadingAnim();
+    
+    const vitals = {
+        hr: document.getElementById("live-hr").value,
+        spo2: document.getElementById("live-spo2").value,
+        temp: document.getElementById("live-temp").value
+    };
+
+    const payload = {
+        patient_id: "demo-patient-123",
+        transcript: transcript,
+        ocr_text: null,
+        vitals_json: {
+          heart_rate_bpm: parseInt(vitals.hr),
+          spo2_percent: parseInt(vitals.spo2),
+        }
+    };
+
+    try {
+        const response = await fetch('/api/v1/emergency/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+    
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+        
+        const data = await response.json();
+        
+        const liveResult = {
+          triage: data.triage_level,
+          triageClass: data.triage_level === 'CRITICAL' || data.triage_level === 'CALL_108_IMMEDIATELY' ? '' : 'triage-banner--urgent',
+          fhir: data.hospital_notified ? "Hospital notified via FHIR R4 ✓" : "Monitoring — FHIR ready if escalated",
+          icon: data.triage_level === 'STABLE' ? '✅' : (data.triage_level === 'CRITICAL' ? '🚨' : '⚠️'),
+          drugFlags: { 
+            show: data.drug_flags.length > 0, 
+            text: data.drug_flags.length > 0 ? data.drug_flags.map(f => f.explanation).join('. ') : "" 
+          },
+          steps: data.caregiver_steps.map((step, idx) => ({
+            num: idx + 1,
+            text: step.instruction,
+            caution: step.caution || null
+          })),
+          brief: data.primary_concern || transcript.substring(0, 100) + '...', 
+          time: "Live API ⚡", 
+          lang: "Auto-detected", 
+          confidence: Math.round(data.confidence * 100) + "%"
+        };
+
+        renderResult(liveResult);
+        document.getElementById("output-loading").hidden = true;
+        document.getElementById("output-result").hidden = false;
+
+    } catch (err) {
+        console.error("Live analysis failed:", err);
+        alert("Live request failed. Ensure the FastAPI backend is running.");
+        document.getElementById("output-loading").hidden = true;
+        document.getElementById("output-placeholder").hidden = false;
+    } finally {
+        btn.disabled = false;
+        btn.querySelector("span:not(.run-btn__icon)").textContent = "Analyse Live Input";
+        steps.forEach((id) => document.getElementById(id).classList.remove("active"));
+    }
+});
+
 console.log("SAHAYAK — AI Caregiver Co-pilot loaded ✓");

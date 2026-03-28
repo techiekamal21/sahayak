@@ -225,83 +225,99 @@
             <span class="demo-header__title">Caregiver Input</span>
           </div>
 
-          <div class="demo-scenarios">
-            <p class="demo-scenarios__label">Choose a scenario:</p>
-            <div class="scenario-buttons">
-              <button
-                class="scenario-btn scenario-btn--active"
-                id="scenario-cardiac"
-                data-scenario="cardiac"
-                aria-pressed="true"
-              >
-                ❤️ Chest Pain
-              </button>
-              <button
-                class="scenario-btn"
-                id="scenario-bp"
-                data-scenario="bp"
-                aria-pressed="false"
-              >
-                📊 High BP
-              </button>
-              <button
-                class="scenario-btn"
-                id="scenario-fall"
-                data-scenario="fall"
-                aria-pressed="false"
-              >
-                🦿 Fall
-              </button>
-              <button
-                class="scenario-btn"
-                id="scenario-breathless"
-                data-scenario="breathless"
-                aria-pressed="false"
-              >
-                💨 Breathless
+          <div class="input-mode-tabs">
+            <button class="mode-tab mode-tab--active" id="tab-demo" aria-controls="panel-demo">📂 Demo Scenarios</button>
+            <button class="mode-tab" id="tab-live" aria-controls="panel-live">🎙️ Live Input</button>
+          </div>
+
+          <!-- Demo Scenarios Panel -->
+          <div id="panel-demo" class="mode-panel">
+            <div class="demo-scenarios">
+              <p class="demo-scenarios__label">Choose a scenario:</p>
+              <div class="scenario-buttons">
+                <button class="scenario-btn scenario-btn--active" id="scenario-cardiac" data-scenario="cardiac" aria-pressed="true">❤️ Chest Pain</button>
+                <button class="scenario-btn" id="scenario-bp" data-scenario="bp" aria-pressed="false">📊 High BP</button>
+                <button class="scenario-btn" id="scenario-fall" data-scenario="fall" aria-pressed="false">🦿 Fall</button>
+                <button class="scenario-btn" id="scenario-breathless" data-scenario="breathless" aria-pressed="false">💨 Breathless</button>
+              </div>
+            </div>
+
+            <div class="demo-input-area">
+              <div class="transcript-display" id="transcript-display" aria-live="polite">
+                <span class="transcript-lang">🇮🇳 Hindi</span>
+                <p class="transcript-text" id="transcript-text">
+                  "Namaste, meri maa ko bahut seene mein dard ho raha hai aur haath mein bhi dard hai.
+                  Woh paseene mein bhi hain. Kya karein?"
+                </p>
+                <p class="transcript-en">
+                  <em>"My mother is having severe chest pain and arm pain. She is also sweating heavily. What should we do?"</em>
+                </p>
+              </div>
+
+              <div class="vitals-display" aria-label="IoT vitals reading">
+                <div class="vital">
+                  <span class="vital__icon" aria-hidden="true">♥</span>
+                  <span class="vital__label">HR</span>
+                  <span class="vital__value" id="vital-hr">115 bpm</span>
+                </div>
+                <div class="vital">
+                  <span class="vital__icon" aria-hidden="true">💧</span>
+                  <span class="vital__label">SpO₂</span>
+                  <span class="vital__value" id="vital-spo2">94%</span>
+                </div>
+                <div class="vital">
+                  <span class="vital__icon" aria-hidden="true">🌡️</span>
+                  <span class="vital__label">Temp</span>
+                  <span class="vital__value" id="vital-temp">37.8°C</span>
+                </div>
+              </div>
+
+              <button class="run-btn" id="run-analysis-btn" aria-label="Run emergency analysis">
+                <span class="run-btn__icon" aria-hidden="true">⚡</span>
+                <span id="run-btn-text">Analyse Emergency</span>
               </button>
             </div>
           </div>
 
-          <div class="demo-input-area">
-            <div class="transcript-display" id="transcript-display" aria-live="polite">
-              <span class="transcript-lang">🇮🇳 Hindi</span>
-              <p class="transcript-text" id="transcript-text">
-                "Namaste, meri maa ko bahut seene mein dard ho raha hai aur haath mein bhi dard hai.
-                Woh paseene mein bhi hain. Kya karein?"
-              </p>
-              <p class="transcript-en">
-                <em>"My mother is having severe chest pain and arm pain. She is also sweating heavily. What should we do?"</em>
-              </p>
-            </div>
+          <!-- Live Input Panel -->
+          <div id="panel-live" class="mode-panel" hidden>
+            <div class="live-input-area">
+              <p class="live-input__hint">Speak or type your emergency in any language. SAHAYAK will process it live via Gemini AI.</p>
 
-            <div class="vitals-display" aria-label="IoT vitals reading">
-              <div class="vital">
-                <span class="vital__icon" aria-hidden="true">♥</span>
-                <span class="vital__label">HR</span>
-                <span class="vital__value" id="vital-hr">115 bpm</span>
-              </div>
-              <div class="vital">
-                <span class="vital__icon" aria-hidden="true">💧</span>
-                <span class="vital__label">SpO₂</span>
-                <span class="vital__value" id="vital-spo2">94%</span>
-              </div>
-              <div class="vital">
-                <span class="vital__icon" aria-hidden="true">🌡️</span>
-                <span class="vital__label">Temp</span>
-                <span class="vital__value" id="vital-temp">37.8°C</span>
-              </div>
-            </div>
+              <button class="mic-btn" id="mic-btn" aria-label="Hold to record voice">
+                <span class="mic-btn__icon" id="mic-icon">🎙️</span>
+                <span id="mic-label">Tap to Record</span>
+              </button>
 
-            <button
-              class="run-btn"
-              id="run-analysis-btn"
-              aria-label="Run emergency analysis"
-            >
-              <span class="run-btn__icon" aria-hidden="true">⚡</span>
-              <span id="run-btn-text">Analyse Emergency</span>
-            </button>
+              <div class="live-status" id="live-status" hidden>
+                <span class="live-status__dot"></span>
+                <span id="live-status-text">Listening...</span>
+              </div>
+
+              <textarea
+                class="live-textarea"
+                id="live-transcript-input"
+                placeholder="Your spoken words will appear here. You can also type directly..."
+                rows="5"
+                aria-label="Emergency description input"
+              ></textarea>
+
+              <div class="live-vitals">
+                <p class="live-vitals__label">Estimated vitals (update if known):</p>
+                <div class="live-vitals-row">
+                  <label>HR <input type="number" id="live-hr" value="90" min="30" max="220" class="vitals-input"> bpm</label>
+                  <label>SpO₂ <input type="number" id="live-spo2" value="97" min="70" max="100" class="vitals-input"> %</label>
+                  <label>Temp <input type="number" id="live-temp" value="37.0" min="35" max="42" step="0.1" class="vitals-input"> °C</label>
+                </div>
+              </div>
+
+              <button class="run-btn" id="run-live-btn" aria-label="Analyse live emergency input">
+                <span class="run-btn__icon" aria-hidden="true">⚡</span>
+                <span>Analyse Live Input</span>
+              </button>
+            </div>
           </div>
+        
         </div>
 
         <!-- Output Panel -->
