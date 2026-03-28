@@ -93,4 +93,4 @@ pytest tests/ -v
 *  **Accessibility**: Frontend is WCAG 2.1 AA compliant (4.5:1 contrast, 48dp touch targets).
 
 ---
-*Built by Kamal Patel for the Google AI Promptwar Hackathon 2025.*
+*Built by Kamal Patel for the Promptwars 2026 March 28 Hackathon.*
