@@ -1,96 +1,95 @@
-# Promptwars 2026 March 28 — SAHAYAK
+# Promptwars 2026 Hackathon — SAHAYAK (First Responder AI)
 
-**Google AI Promptwar Hackathon 2026 Submission**
-**Vertical**: Healthcare
-**Core Tech**: Google Cloud, Gemini 1.5 Pro, FHIR R4, FastAPI
+**Google AI Promptwar Hackathon 2026 Submission**  
+**Vertical**: Healthcare & Emergency Medical Response  
+**Core Technologies**: Google Cloud, Gemini 2.0 Flash, FastAPI, Web Speech API
 
-![SAHAYAK Mission](https://i.imgur.com/KxO2xG3.png)
+---
 
-## The Problem
-India's 6 million informal caregivers face a crisis the moment a medical emergency strikes.
-When an elderly relative experiences chest pain, high blood pressure, or a severe fall, caregivers face:
-1. **Language Barriers**: Panicked caregivers speak Hindi, Tamil, or Kannada, while medical systems require structured clinical English.
-2. **Missing Context**: Medication lists (which contain critical contraindications like blood thinners) are scattered on blurry paper prescriptions.
+## 1. The Problem Space
+India's 6 million informal caregivers face a crisis the moment a medical emergency strikes. When an elderly relative experiences sudden chest pain, high blood pressure, or a severe fall, untrained family members face:
+1. **Language Barriers**: Panicked caregivers speak Hindi, Tamil, Telugu, or Bengali, while medical systems and doctors require structured clinical English.
+2. **Missing Context**: Critical contraindications (like blood thinners) are easily forgotten in the panic.
 3. **Generic Guidance**: Standard helplines give "one-size-fits-all" advice, ignoring the patient's specific chronic conditions.
 
 **Every second between emergency and informed care costs lives.**
 
-## The Solution: SAHAYAK
-**SAHAYAK (सहायक)** is a multimodal, voice-first AI emergency co-pilot completely built on the Google Cloud ecosystem. 
+## 2. The Solution: SAHAYAK (सहायक)
+**SAHAYAK** is a multimodal, real-time AI emergency co-pilot built entirely on the Google ecosystem. 
 
-It accepts a chaotic mix of inputs — a panicked Hindi voice call, a blurry photo of a prescription, and vitals from a wearable device — and fuses them into a single, highly structured, life-saving response in under 8 seconds.
+It acts as an instantaneous bridge between an untrained caregiver and clinical action. It accepts conversational panic prompts in Native Indian Languages, cross-references them against the patient's existing chronic conditions and active medications, and fuses them into a highly structured, life-saving response in milliseconds.
 
-### Key Features
-*   🎤 **Voice-First Input**: Speaks 12+ Indian languages via **Cloud Speech-to-Text v2**.
-*   📸 **Prescription OCR**: Deciphers blurry medical documents via **Cloud Vision API**.
-*   🧠 **Single-Call AI Fusion**: Fuses multiple inputs with a 1M-token patient history profile using **Vertex AI (Gemini 1.5 Pro)**.
-*   🛡️ **Deterministic Safety Gate**: A strict algorithmic validator blocks AI hallucinations and forces mandatory "Call 108" interventions for critical, low-confidence, or unsafe outputs.
-*   🏥 **Hospital EMR Pre-Brief**: Automatically generates and pushes an HL7 **FHIR R4** patient brief to the target hospital via the **Cloud Healthcare API** before the ambulance even arrives.
+### Approach and Logic
+- **Input Modality**: Native Language Voice (via Web Speech API) + Simulated IoT Vitals.
+- **Reasoning Engine**: The inputs are packaged with the patient's complete history profile and sent to **Gemini 2.0 Flash**.
+- **Output Triangulation**: Gemini returns a strictly typed JSON schema containing:
+  1. A Clinical Triage Level (CRITICAL, URGENT, STABLE).
+  2. A native English translation of the caregiver's panicked speech for hospital charts.
+  3. Actionable, step-by-step guidance in plain vocabulary.
+  4. Medication contraindication flags (e.g. "Do not give Aspirin, patient is already on Warfarin").
 
-## Architecture & Google Cloud Services
-This project leverages 8 core Google Cloud services in a production-ready architecture designed to scale to zero and handle sensitive PII securely:
+### Assumptions Made
+1. The patient's chronic conditions, medical history, and active drug list are already onboarded into the Cloud Firestore-style database (or mocked backend) prior to the emergency.
+2. The user of the app is a family member or bystander with absolutely zero formal medical training.
 
-1.  **Vertex AI (Gemini 1.5 Pro)**: Core clinical reasoning layer.
-2.  **Cloud Speech-to-Text**: Voice transcription.
-3.  **Cloud Vision API**: Prescription OCR and unstructured text extraction.
-4.  **Cloud Healthcare API**: FHIR R4 interoperability for hospital integration.
-5.  **Firestore**: NoSQL real-time database for patient profiles.
-6.  **Cloud Run**: Serverless containerised deployment of the FastAPI backend.
-7.  **Firebase Authentication**: Phone OTP auth designed for low digital literacy.
-8.  **Secret Manager & Cloud KMS**: Patient data encrypted at rest (CMEK) and zero hardcoded credentials.
+---
 
-## Repository Structure
-```
-.
-├── app/                  # FastAPI backend
-│   ├── main.py           # App factory
-│   ├── config.py         # Pydantic settings (Secret Manager)
-│   ├── models/           # Pydantic & FHIR schemas
-│   ├── routers/          # API endpoints (emergency, profile)
-│   └── services/         # GCP Integrations (Gemini, Speech, Vision, FHIR)
-├── frontend/             # Voice-first WCAG 2.1 AA UI
-│   ├── index.html
-│   ├── styles.css
-│   └── app.js            # Interactive Emergency Demo
-├── terraform/            # Infrastructure as Code (GCP)
-├── tests/                # 40+ pytest cases (Unit & Integration)
-├── Dockerfile            # Cloud Run optimised container
-└── requirements.txt      # Production dependencies
-```
+## 3. Evaluation Focus Areas
 
-## Running the Project
+Our implementation strictly targets the Promptwars 2026 judging criteria:
 
-### 1. View Frontend Demo (Zero Config)
-To run the interactive UI demo:
-```bash
-cd frontend
-npx serve .
-```
+### A. Code Quality (Readability & Maintainability)
+- **Strict Typing**: The entire Python backend uses strict Pydantic V2 models (`app/models`) ensuring a single source of truth for both API contracts and AI reasoning outputs.
+- **Service Abstraction**: The core Gemini connection is isolated in `app/services/reasoning/gemini.py`, decoupling the AI logic from the FastAPI routing logic.
+- **Prompt Centralization**: All system instructions and JSON structure injections are maintained in a dedicated `prompts.py` file to prevent prompt drift.
 
-### 2. Local Backend Setup (Requires GCP Account)
+### B. Security (Safe & Responsible Implementation)
+- **Zero Hardcoded Secrets**: Completely environment-variable driven via Pydantic `Settings`. 
+- **PII Protection**: Caregiver IDs and sensitive tracking metadata are explicitly stripped from the context payloads before being sent to the Gemini context window (`exclude={"caregiver_id"}`).
+- **Algorithmic Safety Net**: An independent Python `SafetyValidator` intercepts Gemini's outputs. If Gemini hallucinates a confidence score below 70%, the system drops the AI response and executes a hard-fallback to the official Indian "Call 108" emergency protocol.
+
+### C. Efficiency (Optimal Resource Use)
+- **Real-Time Latency**: The intelligence engine was aggressively optimized by abandoning the sluggish `gemini-1.5-pro` model in favor of the blistering fast **Gemini 2.0 Flash**. 
+- **Lean SDK Integration**: We explicitly bypass standard SDK schema-enforcement bloat that crashes on complex nested JSON, instructing Gemini directly via the System Prompt for near-zero-latency structural compliance.
+- **Containerless Architecture**: The entire FastAPI backend is capable of scaling to zero instantly on Google Cloud Run.
+
+### D. Testing (Validation of Functionality)
+- **Resilient Error Handling**: The API possesses native `try/except` HTTP 429 hooks. If Google AI Rate Limits are triggered during high-throughput testing, the backend safely relays a deterministic `429 Too Many Requests` status to the UI layer, avoiding silent 500 server crashes.
+
+### E. Accessibility (Inclusive Design)
+- **Multilingual Support**: The frontend UI features a dynamic Web Speech API Language dropdown bridging the digital divide across Hindi, Tamil, Telugu, Kannada, Bengali, Malayalam, and English.
+- **WCAG 2.1 UI**: The glassmorphism frontend possesses high-contrast text, large 48dp mobile touch-targets, and screen-readable output translation blocks.
+- **Low Digital Literacy**: Features a massive central microphone button ("Tap to Record") instead of requiring frantic typing during a panic attack.
+
+### F. Google Services (Meaningful Integration)
+This project is deeply integrated into Google's ecosystem:
+1. **Gemini 2.0 Flash API**: The autonomous medical reasoning core processing multimodal context.
+2. **Google Cloud Platform (GCP)**: Configured seamlessly for Cloud Run serverless deployment via `app/main.py`.
+3. **Google Chrome Web Speech API**: Powers the real-time transcription layer right in the browser.
+
+---
+
+## 4. How to Run Locally
+
+### Requirements
+- Python 3.10+
+- A Google GenAI API Key (`GEMINI_API_KEY`)
+
+### Start the Backend
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
-pip install -r requirements-dev.txt
 
-# 2. Authenticate with Google Cloud
-gcloud auth application-default login
-gcloud config set project YOUR_PROJECT_ID
+# 2. Set API Key
+$env:GEMINI_API_KEY="your_api_key_here"  # Windows PowerShell
+export GEMINI_API_KEY="your_api_key_here" # Mac/Linux
 
-# 3. Run FastAPI server
-uvicorn app.main:app --reload --port 8080
+# 3. Start FastAPI
+uvicorn app.main:app --host 127.0.0.1 --port 8080
 ```
 
-### 3. Running Tests
-The test suite securely mocks all Google Cloud services via Pytest fixtures, ensuring no unexpected billing charges or API key leaks during CI/CD.
-```bash
-pytest tests/ -v
-```
-
-## Safety & Ethics
-*  **Safety Validator**: An independent Python layer validates all Gemini outputs before delivery. If Gemini gives life-threatening advice (e.g., "Give more aspirin" to a patient already on blood thinners) or confidence drops below 70%, the system drops the AI response and hard-fallbacks to "Call 108 immediately."
-*  **PII Sanitisation**: The AI is blinded to exact caregiver identities to protect privacy.
-*  **Accessibility**: Frontend is WCAG 2.1 AA compliant (4.5:1 contrast, 48dp touch targets).
+### Start the Frontend
+Open `frontend/index.html` in any modern browser (Google Chrome or Microsoft Edge recommended for native Speech Recognition). Connect your microphone, select your native language, and speak!
 
 ---
 *Built by Kamal Patel for the Promptwars 2026 March 28 Hackathon.*

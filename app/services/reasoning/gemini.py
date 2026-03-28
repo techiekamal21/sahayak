@@ -32,7 +32,7 @@ class GeminiReasoningService:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        model: str = "gemini-1.5-pro",
+        model: str = "gemini-2.0-flash",
         temperature: float = 0.1,
         max_output_tokens: int = 2048,
         confidence_threshold: float = 0.70,
@@ -47,11 +47,8 @@ class GeminiReasoningService:
         self.validator = SafetyValidator(confidence_threshold=confidence_threshold)
         logger.info("GeminiReasoningService initialized: google-genai SDK, model=%s", model)
 
-    @retry(
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
-        reraise=True,
-    )
+
+
     async def analyze_emergency(
         self,
         patient: PatientProfile,
@@ -77,7 +74,6 @@ class GeminiReasoningService:
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
                 response_mime_type="application/json",
-                response_schema=EmergencyAnalysis.model_json_schema(),
                 temperature=self._temperature,
                 max_output_tokens=self._max_output_tokens,
             )

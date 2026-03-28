@@ -116,12 +116,22 @@ async def analyze_emergency(
     )
 
     # 2. Gemini analysis (single fused call — all modalities)
-    analysis = await gemini.analyze_emergency(
-        patient=patient,
-        transcript=request.transcript,
-        ocr_text=request.ocr_text,
-        vitals=request.vitals_json,
-    )
+    try:
+        analysis = await gemini.analyze_emergency(
+            patient=patient,
+            transcript=request.transcript,
+            ocr_text=request.ocr_text,
+            vitals=request.vitals_json,
+        )
+    except Exception as e:
+        logger.error(f"Gemini generation error: {e}")
+        error_msg = str(e)
+        status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        if "429" in error_msg or "rate limit" in error_msg.lower() or "quota" in error_msg.lower():
+            status_code = status.HTTP_429_TOO_MANY_REQUESTS
+            error_msg = "Google AI Rate Limit Exceeded. The hackathon endpoint is temporarily overloaded. Please wait 60 seconds and try again."
+        
+        raise HTTPException(status_code=status_code, detail=error_msg)
 
     # 3. Generate incident ID and save to Firestore
     incident_id = str(uuid.uuid4())
@@ -170,6 +180,7 @@ async def analyze_emergency(
         incident_id=incident_id,
         triage_level=analysis.triage_level,
         primary_concern=analysis.primary_concern,
+        english_translation=analysis.english_translation,
         caregiver_steps=analysis.caregiver_steps,
         drug_flags=analysis.drug_flags,
         hospital_notified=hospital_notified,

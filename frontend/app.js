@@ -333,24 +333,27 @@ if (SpeechRecognition) {
   recognition = new SpeechRecognition();
   recognition.continuous = true;
   recognition.interimResults = true;
-  // Use generic Hindi/English matching
-  recognition.lang = 'hi-IN';
 
   const micBtn = document.getElementById("mic-btn");
   const micLabel = document.getElementById("mic-label");
   const liveStatus = document.getElementById("live-status");
   const liveTextArea = document.getElementById("live-transcript-input");
+  const liveLangSelect = document.getElementById("live-lang");
 
   micBtn.addEventListener("click", () => {
     if (!isRecording) {
       // Start recording
       try {
+        recognition.lang = liveLangSelect.value; // Dynamically set language
         recognition.start();
         isRecording = true;
         micBtn.classList.add("mic-btn--recording");
         micLabel.textContent = "Stop Recording";
         liveStatus.hidden = false;
-        // Optionally clear text area on fresh start
+        
+        // Hide previous translation box if tracking new emergency
+        document.getElementById("live-translation-box").hidden = true;
+        
         if(liveTextArea.value === '') liveTextArea.placeholder = "Listening...";
       } catch(e) { console.error("Mic start error:", e); }
     } else {
@@ -404,12 +407,13 @@ document.getElementById("run-live-btn").addEventListener("click", async () => {
 
     const btn = document.getElementById("run-live-btn");
     btn.disabled = true;
-    btn.querySelector("span:not(.run-btn__icon)").textContent = "Analysing via Gemini 1.5...";
+    btn.querySelector("span:not(.run-btn__icon)").textContent = "Analysing via Gemini 2.0 Flash...";
 
     // Hide placeholder, show loading
     document.getElementById("output-placeholder").hidden = true;
     document.getElementById("output-loading").hidden = false;
     document.getElementById("output-result").hidden = true;
+    document.getElementById("live-translation-box").hidden = true; // reset
 
     // Start step-by-step loading animation
     const steps = ["ls-1", "ls-2", "ls-3", "ls-4"];
@@ -444,10 +448,23 @@ document.getElementById("run-live-btn").addEventListener("click", async () => {
           body: JSON.stringify(payload)
         });
     
-        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+        if (!response.ok) {
+            let errorText = `Server error: ${response.status}`;
+            try {
+                const errData = await response.json();
+                if (errData.detail) errorText = errData.detail;
+            } catch(e) {}
+            throw new Error(errorText);
+        }
         
         const data = await response.json();
         
+        // Render Translation if available
+        if (data.english_translation) {
+            document.getElementById("live-translation-text").textContent = data.english_translation;
+            document.getElementById("live-translation-box").hidden = false;
+        }
+
         const liveResult = {
           triage: data.triage_level,
           triageClass: data.triage_level === 'CRITICAL' || data.triage_level === 'CALL_108_IMMEDIATELY' ? '' : 'triage-banner--urgent',
@@ -464,7 +481,7 @@ document.getElementById("run-live-btn").addEventListener("click", async () => {
           })),
           brief: data.primary_concern || transcript.substring(0, 100) + '...', 
           time: "Live API ⚡", 
-          lang: "Auto-detected", 
+          lang: data.detected_language || "Auto-detected", 
           confidence: Math.round(data.confidence * 100) + "%"
         };
 
@@ -474,7 +491,8 @@ document.getElementById("run-live-btn").addEventListener("click", async () => {
 
     } catch (err) {
         console.error("Live analysis failed:", err);
-        alert("Live request failed. Ensure the FastAPI backend is running.");
+        // Extract the error message string from the Error object thrown above
+        alert("Emergency Analysis Failed:\n" + err.message);
         document.getElementById("output-loading").hidden = true;
         document.getElementById("output-placeholder").hidden = false;
     } finally {

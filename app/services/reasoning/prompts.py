@@ -41,8 +41,23 @@ and produce:
 - The translation layer handles delivery to the caregiver in their language.
 
 ## Output Format
-Return valid JSON that conforms exactly to the EmergencyAnalysis schema. No markdown, no prose — \
-only the JSON object.
+Return valid JSON that conforms EXACTLY to the following structure. No markdown, no prose:
+
+{{
+  "detected_language": "str (e.g., hi, en, ta)",
+  "english_translation": "str or null",
+  "triage_level": "CRITICAL, URGENT, MODERATE, STABLE, or CALL_108",
+  "primary_concern": "str",
+  "confidence": 0.95,
+  "patient_summary": "str",
+  "chief_complaint": "str",
+  "drug_flags": [{{"drug_name": "str", "flag_type": "str", "explanation": "str"}}],
+  "caregiver_steps": [{{"priority": 1, "instruction": "str", "caution": "str or null", "rationale": "str"}}],
+  "hospital_brief": "str",
+  "fhir_trigger": true,
+  "incident_id": null,
+  "analyzed_at": "2026-03-28T00:00:00Z"
+}}
 """
 
 # ── User Message Templates ────────────────────────────────────────────────────
