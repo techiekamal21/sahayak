@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAHAYAK — AI Caregiver Co-pilot | Healthcare Emergency Response</title>
+  <meta name="description" content="SAHAYAK bridges the gap between panicked caregivers and life-saving medical care. Voice-first AI emergency co-pilot for informal caregivers in India." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Skip to main content (WCAG 2.1 AA) -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+  <header class="hero" role="banner">
+    <div class="hero__bg">
+      <div class="hero__pulse pulse-1" aria-hidden="true"></div>
+      <div class="hero__pulse pulse-2" aria-hidden="true"></div>
+      <div class="hero__pulse pulse-3" aria-hidden="true"></div>
+    </div>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <div class="nav__brand">
+        <span class="nav__logo" aria-hidden="true">✛</span>
+        <span class="nav__name">Promptwars 2026 March 28 — SAHAYAK</span>
+        <span class="nav__tagline">The Helper</span>
+      </div>
+      <div class="nav__links">
+        <a href="#how-it-works" class="nav__link">How It Works</a>
+        <a href="#technology" class="nav__link">Technology</a>
+        <a href="#demo" class="nav__link">Demo</a>
+        <a href="https://github.com/techiekamal21/sahayak" class="nav__cta" target="_blank" rel="noopener noreferrer">
+          View on GitHub ↗
+        </a>
+      </div>
+    </nav>
+
+    <div class="hero__content" id="main-content">
+      <div class="hero__badge">
+        <span class="badge__dot" aria-hidden="true"></span>
+        Healthcare Vertical · Google AI Hackathon 2025
+      </div>
+      <h1 class="hero__title">
+        Every second between<br />
+        <span class="hero__highlight">emergency</span> and<br />
+        informed care costs lives.
+      </h1>
+      <p class="hero__subtitle">
+        SAHAYAK closes that gap.<br />
+        <span class="hero__hindi" lang="hi">सहायक — The Helper</span>
+      </p>
+      <p class="hero__description">
+        AI-powered emergency co-pilot for India's 6 million informal caregivers.
+        Speaks your language. Understands your panic. Saves lives.
+      </p>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__number">6M+</span>
+          <span class="stat__label">Target caregivers</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">12+</span>
+          <span class="stat__label">Indian languages</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">8</span>
+          <span class="stat__label">GCP services</span>
+        </div>
+        <div class="stat">
+          <span class="stat__number">&lt;8s</span>
+          <span class="stat__label">Response time</span>
+        </div>
+      </div>
+
+      <div class="hero__actions">
+        <button class="btn btn--primary" id="panic-btn" aria-label="Start emergency demo">
+          <span class="btn__icon" aria-hidden="true">🎤</span>
+          Emergency Demo
+        </button>
+        <a href="#how-it-works" class="btn btn--ghost">
+          See how it works ↓
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </header>
+
+  <!-- ── Problem ───────────────────────────────────────────────────────────── -->
+  <section class="section section--dark" aria-labelledby="problem-heading">
+    <div class="container">
+      <div class="section__label">The Problem</div>
+      <h2 id="problem-heading" class="section__title">
+        The gap that costs lives
+      </h2>
+      <p class="section__subtitle">
+        India's informal caregivers face a crisis that existing technology cannot solve.
+      </p>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-card__icon" aria-hidden="true">🌐</div>
+          <h3 class="problem-card__title">Language Barriers</h3>
+          <p class="problem-card__text">
+            A caregiver speaks Hindi, Tamil, or Kannada in a panic.
+            Medical staff need structured English. No bridge exists.
+          </p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon" aria-hidden="true">📋</div>
+          <h3 class="problem-card__title">Scattered Records</h3>
+          <p class="problem-card__text">
+            Medication lists live on torn prescription slips and the caregiver's
+            imperfect memory. No single source of truth at the moment it's needed.
+          </p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon" aria-hidden="true">⏱️</div>
+          <h3 class="problem-card__title">Zero Guidance</h3>
+          <p class="problem-card__text">
+            Standard advice lines give generic instructions.
+            No system accounts for the specific patient's drug list, history, and conditions.
+          </p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon" aria-hidden="true">🏥</div>
+          <h3 class="problem-card__title">ER Arrives Blind</h3>
+          <p class="problem-card__text">
+            The hospital ER has zero information about an incoming patient
+            until they physically arrive. Door-to-treatment time suffers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works ───────────────────────────────────────────────────────── -->
+  <section class="section" id="how-it-works" aria-labelledby="how-heading">
+    <div class="container">
+      <div class="section__label">Solution</div>
+      <h2 id="how-heading" class="section__title">One panic call. Life-saving response.</h2>
+      <p class="section__subtitle">
+        SAHAYAK accepts any input — voice in any Indian language, blurry prescription photos,
+        IoT vitals — and converts them to personalised guidance in under 8 seconds.
+      </p>
+
+      <div class="pipeline">
+        <div class="pipeline__step" data-step="1">
+          <div class="pipeline__icon" aria-hidden="true">🎤</div>
+          <div class="pipeline__content">
+            <div class="pipeline__gcp">Cloud Speech-to-Text v2</div>
+            <h3 class="pipeline__title">Any Input, Any Language</h3>
+            <p class="pipeline__text">
+              Panicked Hindi voice call, blurry prescription photo, IoT wearable vitals —
+              SAHAYAK accepts all of them simultaneously.
+            </p>
+          </div>
+          <div class="pipeline__arrow" aria-hidden="true">→</div>
+        </div>
+
+        <div class="pipeline__step" data-step="2">
+          <div class="pipeline__icon" aria-hidden="true">🧠</div>
+          <div class="pipeline__content">
+            <div class="pipeline__gcp">Gemini 1.5 Pro · Vertex AI</div>
+            <h3 class="pipeline__title">Single Fused AI Call</h3>
+            <p class="pipeline__text">
+              ALL inputs merged in ONE Gemini call with the patient's full profile
+              as context. Patient-specific decisions. Not generic first-aid.
+            </p>
+          </div>
+          <div class="pipeline__arrow" aria-hidden="true">→</div>
+        </div>
+
+        <div class="pipeline__step" data-step="3">
+          <div class="pipeline__icon" aria-hidden="true">🛡️</div>
+          <div class="pipeline__content">
+            <div class="pipeline__gcp">Safety Validator Layer</div>
+            <h3 class="pipeline__title">Safety Gate</h3>
+            <p class="pipeline__text">
+              Rule-based validator blocks harmful instructions before reaching caregiver.
+              Uncertain analysis defaults to "Call 108 immediately."
+            </p>
+          </div>
+          <div class="pipeline__arrow" aria-hidden="true">→</div>
+        </div>
+
+        <div class="pipeline__step" data-step="4">
+          <div class="pipeline__icon" aria-hidden="true">🏥</div>
+          <div class="pipeline__content">
+            <div class="pipeline__gcp">Cloud Healthcare API · FHIR R4</div>
+            <h3 class="pipeline__title">Hospital Pre-Briefed</h3>
+            <p class="pipeline__text">
+              FHIR R4 patient brief sent to hospital ER before ambulance arrives.
+              Door-to-treatment time reduced.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Demo ──────────────────────────────────────────────────────────────── -->
+  <section class="section section--dark" id="demo" aria-labelledby="demo-heading">
+    <div class="container">
+      <div class="section__label">Live Demo</div>
+      <h2 id="demo-heading" class="section__title">See SAHAYAK in action</h2>
+      <p class="section__subtitle">
+        Simulate a real emergency. Watch SAHAYAK analyse, triage, and generate guidance.
+      </p>
+
+      <div class="demo-container">
+        <!-- Input Panel -->
+        <div class="demo-panel demo-panel--input" role="region" aria-label="Emergency input">
+          <div class="demo-header">
+            <div class="demo-header__dot demo-header__dot--red" aria-hidden="true"></div>
+            <div class="demo-header__dot demo-header__dot--yellow" aria-hidden="true"></div>
+            <div class="demo-header__dot demo-header__dot--green" aria-hidden="true"></div>
+            <span class="demo-header__title">Caregiver Input</span>
+          </div>
+
+          <div class="demo-scenarios">
+            <p class="demo-scenarios__label">Choose a scenario:</p>
+            <div class="scenario-buttons">
+              <button
+                class="scenario-btn scenario-btn--active"
+                id="scenario-cardiac"
+                data-scenario="cardiac"
+                aria-pressed="true"
+              >
+                ❤️ Chest Pain
+              </button>
+              <button
+                class="scenario-btn"
+                id="scenario-bp"
+                data-scenario="bp"
+                aria-pressed="false"
+              >
+                📊 High BP
+              </button>
+              <button
+                class="scenario-btn"
+                id="scenario-fall"
+                data-scenario="fall"
+                aria-pressed="false"
+              >
+                🦿 Fall
+              </button>
+              <button
+                class="scenario-btn"
+                id="scenario-breathless"
+                data-scenario="breathless"
+                aria-pressed="false"
+              >
+                💨 Breathless
+              </button>
+            </div>
+          </div>
+
+          <div class="demo-input-area">
+            <div class="transcript-display" id="transcript-display" aria-live="polite">
+              <span class="transcript-lang">🇮🇳 Hindi</span>
+              <p class="transcript-text" id="transcript-text">
+                "Namaste, meri maa ko bahut seene mein dard ho raha hai aur haath mein bhi dard hai.
+                Woh paseene mein bhi hain. Kya karein?"
+              </p>
+              <p class="transcript-en">
+                <em>"My mother is having severe chest pain and arm pain. She is also sweating heavily. What should we do?"</em>
+              </p>
+            </div>
+
+            <div class="vitals-display" aria-label="IoT vitals reading">
+              <div class="vital">
+                <span class="vital__icon" aria-hidden="true">♥</span>
+                <span class="vital__label">HR</span>
+                <span class="vital__value" id="vital-hr">115 bpm</span>
+              </div>
+              <div class="vital">
+                <span class="vital__icon" aria-hidden="true">💧</span>
+                <span class="vital__label">SpO₂</span>
+                <span class="vital__value" id="vital-spo2">94%</span>
+              </div>
+              <div class="vital">
+                <span class="vital__icon" aria-hidden="true">🌡️</span>
+                <span class="vital__label">Temp</span>
+                <span class="vital__value" id="vital-temp">37.8°C</span>
+              </div>
+            </div>
+
+            <button
+              class="run-btn"
+              id="run-analysis-btn"
+              aria-label="Run emergency analysis"
+            >
+              <span class="run-btn__icon" aria-hidden="true">⚡</span>
+              <span id="run-btn-text">Analyse Emergency</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="demo-panel demo-panel--output" role="region" aria-label="SAHAYAK response" aria-live="polite">
+          <div class="demo-header">
+            <div class="demo-header__dot demo-header__dot--red" aria-hidden="true"></div>
+            <div class="demo-header__dot demo-header__dot--yellow" aria-hidden="true"></div>
+            <div class="demo-header__dot demo-header__dot--green" aria-hidden="true"></div>
+            <span class="demo-header__title">SAHAYAK Response</span>
+          </div>
+
+          <div id="output-placeholder" class="output-placeholder">
+            <div class="output-placeholder__icon" aria-hidden="true">🤖</div>
+            <p>Click "Analyse Emergency" to see SAHAYAK respond</p>
+          </div>
+
+          <div id="output-loading" class="output-loading" hidden aria-live="polite" aria-label="Analysing emergency...">
+            <div class="loading-bar">
+              <div class="loading-bar__fill"></div>
+            </div>
+            <div class="loading-steps">
+              <span class="loading-step" id="ls-1">🎤 Transcribing voice...</span>
+              <span class="loading-step" id="ls-2">🧠 Gemini reasoning...</span>
+              <span class="loading-step" id="ls-3">🛡️ Safety validation...</span>
+              <span class="loading-step" id="ls-4">🏥 Hospital brief ready</span>
+            </div>
+          </div>
+
+          <div id="output-result" class="output-result" hidden>
+            <div class="triage-banner" id="triage-banner" role="alert">
+              <span class="triage-icon" id="triage-icon" aria-hidden="true">🚨</span>
+              <span class="triage-level" id="triage-level">CRITICAL</span>
+              <span class="triage-fhir" id="triage-fhir">Hospital notified via FHIR R4 ✓</span>
+            </div>
+
+            <div class="drug-flags" id="drug-flags-section" hidden>
+              <h4 class="drug-flags__title">⚠️ Drug Alert</h4>
+              <p class="drug-flags__text" id="drug-flags-text"></p>
+            </div>
+
+            <div class="guidance-steps">
+              <h4 class="guidance-steps__title">Caregiver Guidance</h4>
+              <ol class="steps-list" id="steps-list"></ol>
+            </div>
+
+            <div class="hospital-brief">
+              <h4 class="hospital-brief__title">
+                <span aria-hidden="true">🏥</span>
+                Clinical Brief — Sent to ER
+              </h4>
+              <p class="hospital-brief__text" id="hospital-brief-text"></p>
+              <div class="fhir-badge">FHIR R4 · Cloud Healthcare API</div>
+            </div>
+
+            <div class="response-meta">
+              <span>⏱ Response: <strong id="response-time">2.3s</strong></span>
+              <span>🌐 Language: <strong id="response-lang">Hindi (hi)</strong></span>
+              <span>🎯 Confidence: <strong id="response-confidence">88%</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Technology ────────────────────────────────────────────────────────── -->
+  <section class="section" id="technology" aria-labelledby="tech-heading">
+    <div class="container">
+      <div class="section__label">Architecture</div>
+      <h2 id="tech-heading" class="section__title">8 GCP Services. Each load-bearing.</h2>
+      <p class="section__subtitle">
+        No decorative integrations. Every Google Cloud service performs a function
+        that no other service in the stack can replicate.
+      </p>
+
+      <div class="gcp-grid">
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 1 — Input</div>
+          <div class="gcp-card__icon" aria-hidden="true">🎤</div>
+          <h3 class="gcp-card__title">Cloud Speech-to-Text v2</h3>
+          <p class="gcp-card__text">Real-time transcription in 12+ Indian languages from panicked, noisy voice calls.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 1 — Input</div>
+          <div class="gcp-card__icon" aria-hidden="true">📸</div>
+          <h3 class="gcp-card__title">Cloud Vision API</h3>
+          <p class="gcp-card__text">OCR for blurry, low-light prescription and discharge paper photos.</p>
+        </div>
+        <div class="gcp-card gcp-card--featured">
+          <div class="gcp-card__layer">Layer 2 — Intelligence</div>
+          <div class="gcp-card__icon" aria-hidden="true">🧠</div>
+          <h3 class="gcp-card__title">Vertex AI · Gemini 1.5 Pro</h3>
+          <p class="gcp-card__text">Single multimodal call fuses all inputs with 1M-token patient history. Temperature 0.1 for clinical consistency.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 3 — Compute</div>
+          <div class="gcp-card__icon" aria-hidden="true">☁️</div>
+          <h3 class="gcp-card__title">Cloud Run</h3>
+          <p class="gcp-card__text">Scales to zero between incidents. FastAPI async. Deployed in asia-south1 for India latency.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 4 — Data</div>
+          <div class="gcp-card__icon" aria-hidden="true">🔥</div>
+          <h3 class="gcp-card__title">Firestore</h3>
+          <p class="gcp-card__text">Real-time patient profile sync. Offline-capable SDK for 2G resilience.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 4 — Identity</div>
+          <div class="gcp-card__icon" aria-hidden="true">📱</div>
+          <h3 class="gcp-card__title">Firebase Authentication</h3>
+          <p class="gcp-card__text">Phone OTP only. No email or password. Designed for low-digital-literacy caregivers.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 4 — Interop</div>
+          <div class="gcp-card__icon" aria-hidden="true">🏥</div>
+          <h3 class="gcp-card__title">Cloud Healthcare API</h3>
+          <p class="gcp-card__text">Delivers FHIR R4 patient brief to hospital EMR before ambulance arrives.</p>
+        </div>
+        <div class="gcp-card">
+          <div class="gcp-card__layer">Layer 4 — Security</div>
+          <div class="gcp-card__icon" aria-hidden="true">🔐</div>
+          <h3 class="gcp-card__title">Secret Manager + KMS</h3>
+          <p class="gcp-card__text">Zero hardcoded credentials. Patient data encrypted at rest with CMEK.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accessibility statement ────────────────────────────────────────────── -->
+  <section class="section section--dark a11y-section" aria-labelledby="a11y-heading">
+    <div class="container a11y-container">
+      <h2 id="a11y-heading" class="a11y-title">Designed for Real India</h2>
+      <div class="a11y-grid">
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">🎙️</span>
+          <strong>Voice-first</strong> — no typing required
+        </div>
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">📶</span>
+          <strong>2G fallback</strong> — text-only mode &lt;50kbps
+        </div>
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">🌐</span>
+          <strong>12 languages</strong> — Hindi, Tamil, Telugu, Kannada + more
+        </div>
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">✋</span>
+          <strong>48dp+ targets</strong> — WCAG 2.1 AA compliant
+        </div>
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">🎨</span>
+          <strong>4.5:1 contrast</strong> — WCAG 2.1 AA
+        </div>
+        <div class="a11y-item">
+          <span class="a11y-icon" aria-hidden="true">♿</span>
+          <strong>Screen reader</strong> — full ARIA support
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="footer__logo" aria-hidden="true">✛</span>
+        <span class="footer__name">SAHAYAK</span>
+      </div>
+      <p class="footer__quote">
+        "Every second between emergency and informed care costs lives. SAHAYAK closes that gap."
+      </p>
+      <div class="footer__meta">
+        <span>Built for Promptwars Hackathon 2026</span>
+        <span aria-hidden="true">·</span>
+        <span>Healthcare Vertical</span>
+        <span aria-hidden="true">·</span>
+        <span>Gemini 1.5 Pro + 8 GCP Services</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

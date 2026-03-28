@@ -1,0 +1,98 @@
+[debug] [2026-03-28T06:57:07.657Z] ----------------------------------------------------------------------
+[debug] [2026-03-28T06:57:07.663Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kamal\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js projects:create sahayak-demo-test1 --display-name Sahayak Demo
+[debug] [2026-03-28T06:57:07.663Z] CLI Version:   15.12.0
+[debug] [2026-03-28T06:57:07.663Z] Platform:      win32
+[debug] [2026-03-28T06:57:07.664Z] Node Version:  v24.12.0
+[debug] [2026-03-28T06:57:07.664Z] Time:          Sat Mar 28 2026 12:27:07 GMT+0530 (India Standard Time)
+[debug] [2026-03-28T06:57:07.664Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-28T06:57:07.678Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-28T06:57:07.679Z] > authorizing via signed-in user (kamalpatelkpts@gmail.com)
+[debug] [2026-03-28T06:57:07.687Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:07.688Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:07.690Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2026-03-28T06:57:07.690Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"sahayak-demo-test1","name":"Sahayak Demo"}
+[debug] [2026-03-28T06:57:09.895Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 200
+[debug] [2026-03-28T06:57:09.896Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"name":"operations/create_project.global.7302195582099822571"}
+[debug] [2026-03-28T06:57:09.898Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:09.898Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:09.898Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 [none]
+[debug] [2026-03-28T06:57:10.351Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 200
+[debug] [2026-03-28T06:57:10.351Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 {"name":"operations/create_project.global.7302195582099822571"}
+[debug] [2026-03-28T06:57:10.854Z] [Project Creation Poller] Retrying task index 0
+[debug] [2026-03-28T06:57:10.854Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:10.855Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:10.855Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 [none]
+[debug] [2026-03-28T06:57:11.382Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 200
+[debug] [2026-03-28T06:57:11.382Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 {"name":"operations/create_project.global.7302195582099822571"}
+[debug] [2026-03-28T06:57:12.383Z] [Project Creation Poller] Retrying task index 0
+[debug] [2026-03-28T06:57:12.383Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:12.384Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:12.384Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 [none]
+[debug] [2026-03-28T06:57:12.816Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 200
+[debug] [2026-03-28T06:57:12.816Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/create_project.global.7302195582099822571 {"name":"operations/create_project.global.7302195582099822571","metadata":{"@type":"type.googleapis.com/google.cloudresourcemanager.v1.ProjectCreationStatus","gettable":true,"ready":true},"done":true,"response":{"@type":"type.googleapis.com/google.cloudresourcemanager.v1.Project","projectNumber":"532170957845","projectId":"sahayak-demo-test1","lifecycleState":"ACTIVE","name":"Sahayak Demo","createTime":"2026-03-28T06:57:11.633Z"}}
+[debug] [2026-03-28T06:57:12.818Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:12.818Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:57:12.819Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1beta1/projects/sahayak-demo-test1:addFirebase [none]
+[debug] [2026-03-28T06:57:14.243Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1beta1/projects/sahayak-demo-test1:addFirebase 403
+[debug] [2026-03-28T06:57:14.243Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/sahayak-demo-test1:addFirebase {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-03-28T06:57:14.244Z] Request to https://firebase.googleapis.com/v1beta1/projects/sahayak-demo-test1:addFirebase had HTTP Error: 403, The caller does not have permission
+[debug] [2026-03-28T06:57:14.660Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/sahayak-demo-test1:addFirebase had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\kamal\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\kamal\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:333:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+[error] 
+[error] Error: Failed to add Firebase to Google Cloud Platform project. See firebase-debug.log for more info.
+[debug] [2026-03-28T06:57:34.911Z] ----------------------------------------------------------------------
+[debug] [2026-03-28T06:57:34.917Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kamal\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2026-03-28T06:57:34.918Z] CLI Version:   15.12.0
+[debug] [2026-03-28T06:57:34.918Z] Platform:      win32
+[debug] [2026-03-28T06:57:34.918Z] Node Version:  v24.12.0
+[debug] [2026-03-28T06:57:34.919Z] Time:          Sat Mar 28 2026 12:27:34 GMT+0530 (India Standard Time)
+[debug] [2026-03-28T06:57:34.919Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Project_New_start\Google_AI_Promptwar\sahayak
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 
+[debug] [2026-03-28T06:58:17.022Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-28T06:58:17.022Z] > authorizing via signed-in user (kamalpatelkpts@gmail.com)
+[debug] [2026-03-28T06:58:28.714Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:58:28.715Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:58:28.719Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1/projects:checkProjectId [none]
+[debug] [2026-03-28T06:58:28.720Z] >>> [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"proposedId":"sahayak-demo-test1"}
+[debug] [2026-03-28T06:58:29.843Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1/projects:checkProjectId 200
+[debug] [2026-03-28T06:58:29.843Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"projectIdStatus":"PROJECT_ID_UNAVAILABLE","suggestedProjectId":"sahayak-demo-test1-a2cc1"}
+[debug] [2026-03-28T06:59:30.587Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:59:30.587Z] Checked if tokens are valid: true, expires at: 1774684530840
+[debug] [2026-03-28T06:59:30.589Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1/projects:checkProjectId [none]
+[debug] [2026-03-28T06:59:30.590Z] >>> [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"proposedId":"sahayak-demo-test1Saharan Demo"}
+[debug] [2026-03-28T06:59:31.367Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1/projects:checkProjectId 200
+[debug] [2026-03-28T06:59:31.367Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1/projects:checkProjectId {"projectIdStatus":"PROJECT_ID_NOT_VALID","suggestedProjectId":"sahayak-demo-test1saharan-demo"}
+[debug] [2026-03-28T06:59:50.617Z] ExitPromptError: User force closed the prompt with SIGINT
+    at Interface.sigint (C:\Users\kamal\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\@inquirer\core\dist\commonjs\lib\create-prompt.js:101:37)
+    at Interface.emit (node:events:508:28)
+    at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1327:18)
+    at ReadStream.onkeypress (node:internal/readline/interface:284:20)
+    at ReadStream.emit (node:events:520:35)
+    at emitKeys (node:internal/readline/utils:371:14)
+    at emitKeys.next (<anonymous>)
+    at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+    at ReadStream.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+[error] 
+[error] Error: An unexpected error has occurred.
