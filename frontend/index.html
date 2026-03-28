@@ -284,6 +284,19 @@
             <div class="live-input-area">
               <p class="live-input__hint">Speak or type your emergency in any language. SAHAYAK will process it live via Gemini AI.</p>
 
+              <div class="live-lang-selector">
+                <label for="live-lang">Spoken Language:</label>
+                <select id="live-lang" class="lang-dropdown">
+                  <option value="hi-IN">Hindi 🇮🇳</option>
+                  <option value="en-IN">English 🇮🇳</option>
+                  <option value="ta-IN">Tamil 🇮🇳</option>
+                  <option value="te-IN">Telugu 🇮🇳</option>
+                  <option value="kn-IN">Kannada 🇮🇳</option>
+                  <option value="bn-IN">Bengali 🇮🇳</option>
+                  <option value="ml-IN">Malayalam 🇮🇳</option>
+                </select>
+              </div>
+
               <button class="mic-btn" id="mic-btn" aria-label="Hold to record voice">
                 <span class="mic-btn__icon" id="mic-icon">🎙️</span>
                 <span id="mic-label">Tap to Record</span>
@@ -301,6 +314,11 @@
                 rows="5"
                 aria-label="Emergency description input"
               ></textarea>
+
+              <div class="live-translation" id="live-translation-box" hidden>
+                <span class="translation-label">🇬🇧 English Translation:</span>
+                <p id="live-translation-text"></p>
+              </div>
 
               <div class="live-vitals">
                 <p class="live-vitals__label">Estimated vitals (update if known):</p>

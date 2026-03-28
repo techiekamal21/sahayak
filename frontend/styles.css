@@ -840,6 +840,51 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.5;
 }
 
+/* Language Selector */
+.live-lang-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--clr-text-muted);
+}
+.lang-dropdown {
+  background: var(--clr-bg-card);
+  color: var(--clr-text);
+  border: 1px solid var(--clr-bg-card-border);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  outline: none;
+  cursor: pointer;
+  transition: border var(--transition-fast);
+}
+.lang-dropdown:hover, .lang-dropdown:focus { border-color: var(--clr-primary); }
+
+/* Translation Box */
+.live-translation {
+  background: rgba(34, 197, 94, 0.05); /* Stable Green tint */
+  border-left: 3px solid var(--clr-stable);
+  padding: var(--space-md);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: -8px; 
+}
+.translation-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-stable);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+#live-translation-text {
+  font-size: 0.9rem;
+  color: var(--clr-text);
+  font-style: italic;
+  margin: 0;
+}
+
 /* Mic Button */
 .mic-btn {
   display: flex;

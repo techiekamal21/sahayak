@@ -30,8 +30,9 @@ class IoTNormaliser:
     pass
 
 @lru_cache
-def get_gemini_service(settings: Settings = Depends(get_settings)) -> GeminiReasoningService:
+def get_gemini_service() -> GeminiReasoningService:
     """Return singleton GeminiReasoningService."""
+    settings = get_settings()
     return GeminiReasoningService(
         model=settings.gemini_model,
         temperature=settings.gemini_temperature,
